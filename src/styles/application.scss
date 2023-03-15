@@ -1,0 +1,55 @@
+@import "modules/reset";
+@import "modules/mixins";
+@import "modules/constants";
+@import "modules/fonts";
+
+@import "modules/layout";
+
+@import "modules/logo";
+@import "modules/search";
+@import "modules/tags";
+@import "modules/external_links";
+@import "modules/categories";
+@import "modules/translations";
+@import "modules/examples";
+@import "modules/images";
+@import "modules/inflection";
+@import "modules/other_languages";
+@import "modules/previous_queries";
+@import "modules/shortcuts";
+@import "modules/footer";
+
+.all {
+  background-color: $light-cream;
+}
+
+p {
+  margin: $space-2 0;
+}
+
+.hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+.searched-query {
+  @include heading-1;
+}
+
+.onboarding {
+  @include section;
+}
+
+td {
+  vertical-align: middle;
+}
+
+select {
+  color: black;
+}

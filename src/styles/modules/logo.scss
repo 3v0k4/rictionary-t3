@@ -1,0 +1,43 @@
+@mixin logo($dimension) {
+  max-width: $dimension;
+  max-height: $dimension;
+  display: block;
+  margin: 0 auto;
+}
+
+.logo {
+  @include section;
+}
+
+.logo__icon {
+  @include logo(200px);
+}
+
+.logo__icon--footer {
+  @include logo(100px);
+}
+
+.cls-1,
+.cls-2 {
+  fill: #fff;
+}
+
+.cls-1,
+.cls-3,
+.cls-4 {
+  stroke: #000;
+  stroke-miterlimit: 10;
+}
+
+.cls-1 {
+  stroke-width: 13px;
+}
+
+.cls-3 {
+  fill: red;
+  stroke-width: 4px;
+}
+
+.cls-4 {
+  fill: none;
+}
