@@ -1,4 +1,4 @@
-import { type NextPage } from "next";
+import { type NextPage, type GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,8 +8,9 @@ import { Tag } from "~/components/Tag";
 import { SearchIcon } from "~/components/SearchIcon";
 import headshotRiccardo from "~/images/headshot-riccardo.jpg";
 import headshotGosia from "~/images/headshot-gosia.jpg";
+import { queryParamFrom } from "~/utils/queryParamFrom";
 
-const Home: NextPage = () => {
+const Home: NextPage<{ query: string }> = ({ query }) => {
   return (
     <>
       <Head>
@@ -30,7 +31,7 @@ const Home: NextPage = () => {
               </i>
             </section>
 
-            <Form />
+            <Form query={query} />
 
             <section className="onboarding">
               <p>First time here?</p>
@@ -138,6 +139,11 @@ const Home: NextPage = () => {
       </div>
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const _ = await Promise.resolve();
+  return { props: { query: queryParamFrom("query", query) } };
 };
 
 export default Home;
