@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import Autocomplete from "@trevoreyre/autocomplete-js";
 
 export const Form = ({ query: initialQuery }: { query: string }) => {
   const [query, setQuery] = useState(initialQuery);
@@ -9,6 +10,25 @@ export const Form = ({ query: initialQuery }: { query: string }) => {
     if (!element) return;
     element.focus();
   };
+
+  useEffect(() => {
+    const search = (input: string) =>
+      input.length === 0
+        ? Promise.resolve([])
+        : fetch(`api/suggestions?query=${encodeURIComponent(input)}`).then(
+            (response) => response.json()
+          );
+    const onSubmit = () => document.getElementsByTagName("form")[0]?.submit();
+    const debounceTime = 300;
+    const autocomplete = new Autocomplete("#search__container", {
+      search,
+      onSubmit,
+      debounceTime,
+    });
+    return () => {
+      autocomplete.destroy();
+    };
+  }, []);
 
   return (
     <form
