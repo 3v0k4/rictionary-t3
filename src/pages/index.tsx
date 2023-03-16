@@ -10,7 +10,11 @@ import headshotRiccardo from "~/images/headshot-riccardo.jpg";
 import headshotGosia from "~/images/headshot-gosia.jpg";
 import { queryParamFrom } from "~/utils/queryParamFrom";
 
-type Props = { _kind: "NoQuery" } | { _kind: "NotFound"; query: string };
+type Props =
+  | { _kind: "NoQuery" }
+  | { _kind: "NotFound"; query: string }
+  | { _kind: "Babla" }
+  | { _kind: "Wiktionary" };
 
 const Home: NextPage<Props> = (props) => {
   return (
@@ -100,14 +104,18 @@ const Home: NextPage<Props> = (props) => {
                 <kbd className="shortcuts__shortcut-icon">f</kbd>
                 <span>Search</span>
               </li>
-              <li>
-                <kbd className="shortcuts__shortcut-icon">w</kbd>
-                <span>Wiktionary</span>
-              </li>
-              <li>
-                <kbd className="shortcuts__shortcut-icon">b</kbd>
-                <span>bab.la</span>
-              </li>
+              {props._kind !== "Wiktionary" ? null : (
+                <li>
+                  <kbd className="shortcuts__shortcut-icon">w</kbd>
+                  <span>Wiktionary</span>
+                </li>
+              )}
+              {props._kind !== "Babla" ? null : (
+                <li>
+                  <kbd className="shortcuts__shortcut-icon">b</kbd>
+                  <span>bab.la</span>
+                </li>
+              )}
             </ul>
           </section>
         </div>
