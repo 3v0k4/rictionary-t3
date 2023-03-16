@@ -10,7 +10,9 @@ import headshotRiccardo from "~/images/headshot-riccardo.jpg";
 import headshotGosia from "~/images/headshot-gosia.jpg";
 import { queryParamFrom } from "~/utils/queryParamFrom";
 
-const Home: NextPage<{ query: string }> = ({ query }) => {
+type Props = { _kind: "NoQuery" } | { _kind: "NotFound"; query: string };
+
+const Home: NextPage<Props> = (props) => {
   return (
     <>
       <Head>
@@ -24,31 +26,53 @@ const Home: NextPage<{ query: string }> = ({ query }) => {
 
       <div className="all">
         <div className="container">
-          <main>
-            <section className="logo">
-              <i className="logo__icon">
-                <Logo />
-              </i>
-            </section>
+          {props._kind === "NotFound" ? (
+            <>
+              <header>
+                <Form query={props.query} klass="search__container--header" />
+              </header>
 
-            <Form query={query} />
+              <main>
+                <h1 className="searched-query">{props.query}</h1>
 
-            <section className="onboarding">
-              <p>First time here?</p>
+                <p>Not found.</p>
 
-              <p>
-                Search for a word in any language to find the Polish definition.
-                Or try the following examples:
-              </p>
+                <p>
+                  If you are looking for a verb, make sure the term is
+                  infinitive.
+                  <br />
+                  Otherwise, make sure the term is singular, masculine, and in
+                  nominative case.
+                </p>
+              </main>
+            </>
+          ) : (
+            <main>
+              <section className="logo">
+                <i className="logo__icon">
+                  <Logo />
+                </i>
+              </section>
 
-              <ul className="tags">
-                <Tag query="sklep" />
-                <Tag query="shop" />
-                <Tag query="negozio" />
-                <Tag query="tienda" />
-              </ul>
-            </section>
-          </main>
+              <Form query="" klass="search__container--main" />
+
+              <section className="onboarding">
+                <p>First time here?</p>
+
+                <p>
+                  Search for a word in any language to find the Polish
+                  definition. Or try the following examples:
+                </p>
+
+                <ul className="tags">
+                  <Tag query="sklep" />
+                  <Tag query="shop" />
+                  <Tag query="negozio" />
+                  <Tag query="tienda" />
+                </ul>
+              </section>
+            </main>
+          )}
           <section
             id="previous-queries"
             className="previous-queries"
@@ -141,9 +165,16 @@ const Home: NextPage<{ query: string }> = ({ query }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+export const getServerSideProps: GetServerSideProps<Props> = async ({
+  query,
+}) => {
   const _ = await Promise.resolve();
-  return { props: { query: queryParamFrom("query", query) } };
+  const q = queryParamFrom("query", query);
+  if (q.length === 0) {
+    return { props: { _kind: "NoQuery" } };
+  } else {
+    return { props: { _kind: "NotFound", query: q } };
+  }
 };
 
 export default Home;

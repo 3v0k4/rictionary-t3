@@ -1,7 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import Autocomplete from "@trevoreyre/autocomplete-js";
 
-export const Form = ({ query: initialQuery }: { query: string }) => {
+export const Form = ({
+  query: initialQuery,
+  klass,
+}: {
+  query: string;
+  klass: string;
+}) => {
   const [query, setQuery] = useState(initialQuery);
   const queryRef = useRef<HTMLInputElement>(null);
   const clearSearch = () => {
@@ -34,7 +40,7 @@ export const Form = ({ query: initialQuery }: { query: string }) => {
     <form
       action="/"
       id="search__container"
-      className="search__container search__container--main"
+      className={`search__container ${klass}`}
     >
       <label htmlFor="query" className="hidden">
         Word in any language
