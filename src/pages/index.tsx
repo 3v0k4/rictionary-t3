@@ -177,14 +177,28 @@ const Home: NextPage<Props> = (props) => {
   );
 };
 
+const fetchWiktionaryPage = async (query: string): Promise<string | null> => {
+  const q = query.replaceAll(" ", "_");
+  const response = await fetch(
+    `https://pl.wiktionary.org/api/rest_v1/page/html/${q}`
+  );
+  const html = await response.text();
+  if (html.toLocaleLowerCase().includes("język")) {
+    return html;
+  } else {
+    return null;
+  }
+};
+
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   query,
 }) => {
-  const _ = await Promise.resolve();
   const q = queryParamFrom("query", query);
   if (q.length === 0) {
     return { props: { _kind: "NoQuery" } };
   } else {
+    const wiktionaryPage = await fetchWiktionaryPage(q);
+    console.log(wiktionaryPage);
     return { props: { _kind: "NotFound", query: q } };
   }
 };
