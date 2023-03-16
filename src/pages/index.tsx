@@ -117,6 +117,14 @@ const Home: NextPage<Props> = (props) => {
         </div>
 
         <footer className="footer">
+          {props._kind === "NoQuery" ? null : (
+            <section className="logo">
+              <i className="logo__icon--footer">
+                <Logo />
+              </i>
+            </section>
+          )}
+
           <div className="footer__container">
             <Image
               src={headshotRiccardo}
