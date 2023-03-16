@@ -108,10 +108,6 @@ const Home: NextPage<Props> = (props) => {
                 <kbd className="shortcuts__shortcut-icon">b</kbd>
                 <span>bab.la</span>
               </li>
-              <li>
-                <kbd className="shortcuts__shortcut-icon">b</kbd>
-                <span>bab.la</span>
-              </li>
             </ul>
           </section>
         </div>
