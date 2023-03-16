@@ -36,6 +36,25 @@ export const Form = ({
     };
   }, []);
 
+  useEffect(() => {
+    const callback = (event: KeyboardEvent) => {
+      const element = queryRef.current;
+      if (!element) return;
+      if (event.key !== "f") {
+        return;
+      }
+      if (document.activeElement !== document.getElementsByTagName("body")[0]) {
+        return;
+      }
+      element.select();
+      event.preventDefault();
+    };
+    document.addEventListener("keypress", callback);
+    return () => {
+      document.removeEventListener("keypress", callback);
+    };
+  }, []);
+
   return (
     <form
       action="/"
