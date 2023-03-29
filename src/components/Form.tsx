@@ -94,8 +94,8 @@ export const Form = ({
               viewBox="0 0 847 847"
               x="0px"
               y="0px"
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
             >
               <g>
                 <path
