@@ -1,5 +1,5 @@
-import { NextMiddleware, NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import type { NextMiddleware, NextRequest } from "next/server";
 import { env } from "./env.mjs";
 
 const challenge = (request: NextRequest): NextResponse => {

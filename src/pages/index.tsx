@@ -69,7 +69,9 @@ const Home: NextPage<Props> = (props) => {
 
                   <ul className="translations__list">
                     {props.translations.map((translation) => (
-                      <li className="translations__item">{translation}</li>
+                      <li key={translation} className="translations__item">
+                        {translation}
+                      </li>
                     ))}
                   </ul>
                 </section>
@@ -204,7 +206,6 @@ const Home: NextPage<Props> = (props) => {
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   query,
-  req,
 }) => {
   const q = queryParamFrom("query", query);
   if (q.length === 0) {
@@ -215,9 +216,9 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
       : false
       ? withStubbed(3)
       : withStubbed(0));
-    const translations = completion.data.choices[0].message.content
+    const translations = (completion.data.choices[0].message?.content ?? "")
       .split("\n")
-      .map((translation: any) => translation.trim());
+      .map((translation) => translation.trim());
     if (translations.length === 3) {
       return {
         props: {
@@ -258,7 +259,7 @@ const withOpenAi = async (q: string) => {
   });
   const openai = new OpenAIApi(configuration);
 
-  const completion: any = await openai.createChatCompletion({
+  const completion = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: [
       {
@@ -270,7 +271,7 @@ const withOpenAi = async (q: string) => {
   console.log(completion.data);
   console.log(completion.data.choices);
   console.log(completion.data.choices[0]);
-  return completion as any;
+  return completion;
 };
 
 // {
