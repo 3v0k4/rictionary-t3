@@ -211,7 +211,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   if (q.length === 0) {
     return { props: { _kind: "NoQuery" } };
   } else {
-    const completion = await (false
+    const completion = await (true
       ? withOpenAi(q)
       : false
       ? withStubbed(3)
