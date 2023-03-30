@@ -7,6 +7,8 @@ import { z } from "zod";
 const server = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]),
   OPEN_AI_API_KEY: z.string(),
+  AUTHENTICATION_USERNAME: z.string(),
+  AUTHENTICATION_PASSWORD: z.string(),
 });
 
 /**
@@ -26,6 +28,8 @@ const client = z.object({
 const processEnv = {
   NODE_ENV: process.env.NODE_ENV,
   OPEN_AI_API_KEY: process.env.OPEN_AI_API_KEY,
+  AUTHENTICATION_USERNAME: process.env.AUTHENTICATION_USERNAME,
+  AUTHENTICATION_PASSWORD: process.env.AUTHENTICATION_PASSWORD,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 
