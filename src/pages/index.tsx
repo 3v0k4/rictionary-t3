@@ -217,8 +217,13 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
       ? withStubbed(3)
       : withStubbed(0));
     const translations = (completion.data.choices[0].message?.content ?? "")
-      .split("\n")
+      .split(`\n`)
       .map((translation) => translation.trim());
+    console.log(completion.data);
+    console.log(completion.data.choices);
+    console.log(completion.data.choices[0]);
+    console.log(completion.data.choices[0].message?.content ?? "");
+    console.log(translations);
     if (translations.length === 3) {
       return {
         props: {
@@ -245,7 +250,7 @@ const withStubbed = async (n: number) => {
       choices: [
         {
           message: {
-            content: ["store ", "shop", "market"].slice(0, n).join("\n"),
+            content: ["store ", "shop", "market"].slice(0, n).join(`\n`),
           },
         },
       ],
@@ -268,9 +273,6 @@ const withOpenAi = async (q: string) => {
       },
     ],
   });
-  console.log(completion.data);
-  console.log(completion.data.choices);
-  console.log(completion.data.choices[0]);
   return completion;
 };
 
